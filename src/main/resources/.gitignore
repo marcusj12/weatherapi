@@ -1,1 +1,2 @@
 application.properties
+#Tells git to ignore file when uploading to internet; protects specific informationfd
