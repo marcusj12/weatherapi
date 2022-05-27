@@ -1,6 +1,7 @@
 package com.careerdevs.weatherapi.controllers;
 // Controllers are used to take in API request
 import com.careerdevs.weatherapi.models.CurrentWeather;
+import com.careerdevs.weatherapi.models.CurrentWeatherReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -21,22 +22,29 @@ public class CurrentWeatherController {
 
     @GetMapping("/city/{cityName}")
     // Want request from external api; so we use ResTemplate; add it as a parameter
-    // ResponseEntitiy ; a way for a generic class; allows for fine level of control for the status, data, and headers of our responses
-    public ResponseEntity<?> getCurrentWeatherByCityPV(RestTemplate restTemplate, @PathVariable String cityName) {
+    // ResponseEntity ; a way for a generic class; allows for fine level of control for the status, data, and headers of our responses
+    public ResponseEntity<?> getCurrentWeatherByCityPV(RestTemplate restTemplate, @PathVariable String cityName) { // allows anyone to choose any given city
 // The catch block; used for error handling; handle code in between try-catch; if error occurs; executes under catch; can add multiple *error executions*? under catch block to; creating *dynamic replies*?
         try {
             String apiKey = env.getProperty("OW_API_KEY"); // Can access any properties within application.properties without sharing when uploading code
             String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
             String openWeatherURL = BASE_URL + queryString;
 
-            CurrentWeather openWeatherResponse = restTemplate.getForObject(openWeatherURL, CurrentWeather.class);
+            CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class);
 
-            assert openWeatherResponse != null;
-            System.out.println("City: " + openWeatherResponse.getName());
-            System.out.println("Temp: " + openWeatherResponse.getMain().getTemp());
-            System.out.println("Description: " + openWeatherResponse.getWeather()[0].getDescription());
+            assert owRes != null;
+//            System.out.println("City: " + openWeatherResponse.getName());
+//            System.out.println("Temp: " + openWeatherResponse.getMain().getTemp());
+//            System.out.println("Description: " + openWeatherResponse.getWeather()[0].getDescription());
+            CurrentWeatherReport report = new CurrentWeatherReport(
+                    owRes.getName(),
+                    owRes.getCoord(),
+                    owRes.getMain(),
+                    owRes.getWeather()[0],
+                    owRes.
+            );
 
-            return ResponseEntity.ok(openWeatherResponse);
+            return ResponseEntity.ok(report);
             //We  run code that responds to an error exception by entering faulty input data; we use the error exception to make custom reply
 
         } catch (HttpClientErrorException.NotFound e) {
