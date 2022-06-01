@@ -41,8 +41,10 @@ public class CurrentWeatherController {
                     owRes.getCoord(),
                     owRes.getMain(),
                     owRes.getWeather()[0],
-                    owRes.
+                    "imperial"
             );
+
+            System.out.println(report);
 
             return ResponseEntity.ok(report);
             //We  run code that responds to an error exception by entering faulty input data; we use the error exception to make custom reply
@@ -90,4 +92,5 @@ public class CurrentWeatherController {
 
 
     }
-*/// Mehtods are static when you dont create instances of them
+*/// Methods are static when you dont create instances of them
+
