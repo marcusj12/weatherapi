@@ -41,6 +41,15 @@ public class CurrentWeather {
         public float getLat() {
             return lat;
         }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("{");
+            sb.append("\"lon\":").append(lon);
+            sb.append(", \"lat\":").append(lat);
+            sb.append('}');
+            return sb.toString();
+        }
     }
 
     public static class Main {
@@ -72,14 +81,15 @@ public class CurrentWeather {
 
         @Override
         public String toString() {
-            return "Main{" +
-                    "temp=" + temp +
-                    ", feels_like=" + feels_like +
-                    ", temp_min=" + temp_min +
-                    ", emp_max=" + emp_max +
-                    ", pressure=" + pressure +
-                    ", humidity=" + humidity +
-                    '}';
+            final StringBuffer sb = new StringBuffer("{");
+            sb.append("\"temp\":").append(temp);
+            sb.append(", \"feels_like\":").append(feels_like);
+            sb.append(", \"temp_min\":").append(temp_min);
+            sb.append(", \"emp_max\":").append(emp_max);
+            sb.append(", \"pressure\":").append(pressure);
+            sb.append(", \"humidity\":").append(humidity);
+            sb.append('}');
+            return sb.toString();
         }
     }
 

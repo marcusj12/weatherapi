@@ -17,7 +17,7 @@ public class CurrentWeatherController {
     //Inversion of control; taking control away from ourselves and give it to framework of springboot for ease of automation; autowired annotation.
     private Environment env;
 
-    private final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";// BaseURL used to reuses parts of URl that will remain the same
+    private final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";// BaseURL used to reuse parts of URl that will remain the same
 
 
     @GetMapping("/city/{cityName}")
@@ -26,11 +26,13 @@ public class CurrentWeatherController {
     public ResponseEntity<?> getCurrentWeatherByCityPV(RestTemplate restTemplate, @PathVariable String cityName) { // allows anyone to choose any given city
 // The catch block; used for error handling; handle code in between try-catch; if error occurs; executes under catch; can add multiple *error executions*? under catch block to; creating *dynamic replies*?
         try {
+            String units = "imperial";
             String apiKey = env.getProperty("OW_API_KEY"); // Can access any properties within application.properties without sharing when uploading code
-            String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
+            String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=" + units;
             String openWeatherURL = BASE_URL + queryString;
 
-            CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class);
+            //System.out.println(openWeatherURL);
+            CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class); // Client that allow calls to be made to weather api
 
             assert owRes != null;
 //            System.out.println("City: " + openWeatherResponse.getName());
@@ -43,7 +45,7 @@ public class CurrentWeatherController {
                     owRes.getWeather()[0],
                     "imperial"
             );
-
+           // System.out.println(owRes);
             System.out.println(report);
 
             return ResponseEntity.ok(report);

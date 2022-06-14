@@ -1,7 +1,7 @@
 package com.careerdevs.weatherapi.models;
 
 public class CurrentWeatherReport {
-// create fields that store data and are accessible to a metv  hod
+// create fields that store data and are accessible
     private String name;
     private String main;
     private String description;
@@ -89,11 +89,11 @@ public class CurrentWeatherReport {
         sb.append("\"name\":\"").append(name).append('"');
         sb.append(", \"main\":\"").append(main).append('"');
         sb.append(", \"description\":\"").append(description).append('"');
-        sb.append(", \"units\":\"").append(units).append(units.equals("imperial") ? "F" : "C").append("°\"");
-        sb.append(", \"temp\":").append(temp).append(units.equals("imperial") ? "F" : "C").append("°\"");
-        sb.append(", \"feelsLike\":").append(feelsLike).append(units.equals("imperial") ? "F" : "C").append("°\"");
-        sb.append(", \"tempMin\":").append(tempMin).append(units.equals("imperial") ? "F" : "C").append("°\"");
-        sb.append(", \"tempMax\":").append(tempMax).append(units.equals("imperial") ? "F" : "C").append("°\"");
+        sb.append(", \"units\":\"").append(units).append('"');
+        sb.append(", \"temp\":").append(temp).append("°").append(units.equals("imperial") ? "F" : "C").append("\"");
+        sb.append(", \"feelsLike\":").append(feelsLike).append("°").append(units.equals("imperial") ? "F" : "C").append("\"");
+        sb.append(", \"tempMin\":").append(tempMin).append("°").append(units.equals("imperial") ? "F" : "C").append("\"");
+        sb.append(", \"tempMax\":").append(tempMax).append("°").append(units.equals("imperial") ? "F" : "C").append("\"");
         sb.append(", \"pressure\":").append(pressure);
         sb.append(", \"humidity\":").append(humidity);
         sb.append(", \"lon\":").append(lon);
