@@ -1,7 +1,7 @@
 package com.careerdevs.weatherapi.models;
 
 public class CurrentWeatherReport {
-// create fields that store data and are accessible to a metv  hod
+// create fields that store data and are accessible
     private String name;
     private String main;
     private String description;

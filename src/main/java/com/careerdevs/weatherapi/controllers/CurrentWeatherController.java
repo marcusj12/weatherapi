@@ -26,11 +26,12 @@ public class CurrentWeatherController {
     public ResponseEntity<?> getCurrentWeatherByCityPV(RestTemplate restTemplate, @PathVariable String cityName) { // allows anyone to choose any given city
 // The catch block; used for error handling; handle code in between try-catch; if error occurs; executes under catch; can add multiple *error executions*? under catch block to; creating *dynamic replies*?
         try {
+            String units = "imperial";
             String apiKey = env.getProperty("OW_API_KEY"); // Can access any properties within application.properties without sharing when uploading code
-            String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
+            String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=" + units;
             String openWeatherURL = BASE_URL + queryString;
 
-            CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class);
+            CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class); // Client that allow calls to be made to weather api
 
             assert owRes != null;
 //            System.out.println("City: " + openWeatherResponse.getName());
@@ -43,7 +44,7 @@ public class CurrentWeatherController {
                     owRes.getWeather()[0],
                     "imperial"
             );
-
+           // System.out.println(owRes);
             System.out.println(report);
 
             return ResponseEntity.ok(report);
