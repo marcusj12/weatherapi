@@ -1,4 +1,7 @@
 package com.careerdevs.weatherapi.models;
+
+import java.util.Arrays;
+
 // Models - modeling API data; creating a structure
 public class CurrentWeather {
 
@@ -111,6 +114,41 @@ public class CurrentWeather {
         public String getIcon() {
             return icon;
         }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("{");
+            sb.append("\"id\":").append(id);
+            sb.append(", \"main\":\"").append(main).append('"');
+            sb.append(", \"description\":\"").append(description).append('"');
+            sb.append(", \"icon\":\"").append(icon).append('"');
+            sb.append('}');
+            return sb.toString();
+        }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("{");
+        sb.append("\"name\":\"").append(name).append('"');
+        sb.append(", \"timezone\":").append(timezone);
+        sb.append(", \"visibility\":").append(visibility);
+        sb.append(", \"coord\":").append(coord);
+        sb.append(", \"main\":").append(main);
+        sb.append(", \"weather\":").append(weather == null ? "null" : Arrays.asList(weather).toString());
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public CurrentWeatherReport createReport (String units){
+            return new CurrentWeatherReport(
+                getName(),
+                getCoord(),
+                getMain(),
+                getWeather()[0],
+                    "units"
+
+        );
     }
 }
 

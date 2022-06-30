@@ -33,15 +33,18 @@ public class Forecast {
             return population;
         }
     }
-// Take the bulk of info from current weather but ignore a couple pieces.
-    public static class ForecastWeatherData  extends  CurrentWeather{
-// can add annotation that allows the machine to look for a specific key and ignore field name
+
+    // Take the bulk of info from current weather but ignore a couple pieces.
+    public static class ForecastWeatherData extends CurrentWeather {
+        // can add annotation that allows the machine to look for a specific key and ignore field name
         @JsonProperty("dt_txt")
         private String dateTime;
+
         private float pop;
-// Tell java to ignore values if they're null from api request data;
+        // Tell java to ignore values if they're null from api request data;
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private String name;
+
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private Coords coord;
 
@@ -60,6 +63,10 @@ public class Forecast {
 
     public ForecastWeatherData[] getList() {
         return list;
+    }
+
+    public ForecastReport createReport(String units) {
+        return new ForecastReport(this, units);
     }
 }
 
