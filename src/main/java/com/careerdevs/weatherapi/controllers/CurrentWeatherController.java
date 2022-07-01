@@ -2,6 +2,7 @@ package com.careerdevs.weatherapi.controllers;
 // Controllers are used to take in API request
 import com.careerdevs.weatherapi.models.CurrentWeather;
 import com.careerdevs.weatherapi.models.CurrentWeatherReport;
+import com.careerdevs.weatherapi.validation.WeatherValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/current")
@@ -29,6 +31,15 @@ public class CurrentWeatherController {
 // The catch block; used for error handling; handle code in between try-catch; if error occurs; executes under catch; can add multiple *error executions*? under catch block to; creating *dynamic replies*?
         try {
             String units = "imperial";
+            HashMap<String, String> validationErrors = WeatherValidation.validateQuery(cityName, units);
+
+            //If validation fails in any way, return error  message(s)
+            if (validationErrors.size() !=0) {
+                return ResponseEntity.badRequest().body(validationErrors);// return an array of all erros; hasmaps are best
+            }
+
+
+
             String apiKey = env.getProperty("OW_API_KEY"); // Can access any properties within application.properties without sharing when uploading code
             String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=" + units;
             String openWeatherURL = BASE_URL + queryString;
@@ -78,36 +89,17 @@ public class CurrentWeatherController {
             @RequestParam(defaultValue = "imperial") String units
             ) {
         try {
-            ArrayList<String> validationErrors = new ArrayList<>();
-            // validation - name
-            // name cant be blank
-            if (cityName.trim().equals("")) {
-                validationErrors.add("City name required");
+            HashMap<String, String> validationErrors = WeatherValidation.validateQuery(cityName, units);
 
-            } else if (
-                    !cityName.replaceAll("[^a-zA-Z -]", "").equals(cityName)
-            ) {
-                //System.out.println(cityName);
-               // System.out.println(cityName.replaceAll("[^a-zA-z]","*").equals(cityName));
-                // name should not include special chars/numbers
-                validationErrors.add("Invalid City Name");
-            }
-            //validation - units
-            // is it metric or imperial
-            if (!units.equals("metric") && !units.equals(("imperial")))  {
-                validationErrors.add("Units must be metric OR imperial  ");
-            }
             //If validation fails in any way, return error  message(s)
             if (validationErrors.size() !=0) {
-                return ResponseEntity.badRequest().body(validationErrors); // return an array of all erros; hasmaps are best
+                return ResponseEntity.badRequest().body(validationErrors);// return an array of all erros; hasmaps are best
             }
 
             String apiKey = env.getProperty("OW_API_KEY");
             String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=" + units;
             String openWeatherURL = BASE_URL + queryString;
 
-            //getForObject -
-            // getFor
             CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class);
             assert owRes!=null;
 
@@ -121,10 +113,7 @@ public class CurrentWeatherController {
             System.out.println(e.getClass()); // indicates what the exact exception was
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
-
     }
-
 }
 // Methods are static when you don't create instances of them
 

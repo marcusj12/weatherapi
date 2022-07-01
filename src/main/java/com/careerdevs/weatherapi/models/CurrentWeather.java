@@ -115,6 +115,7 @@ public class CurrentWeather {
             return icon;
         }
 
+
         @Override
         public String toString() {
             final StringBuffer sb = new StringBuffer("{");
