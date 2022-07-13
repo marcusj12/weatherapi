@@ -76,10 +76,7 @@ public class CurrentWeatherController {
      api/current/?city=boston
      */
 
-
 // http:localhost:8000/api/current/city?name=boston&units=imperial
-
-
     @GetMapping("/city")
     public ResponseEntity<?> getCurrentWeatherByCityRequestParams(
             RestTemplate restTemplate,// client; initiates call
