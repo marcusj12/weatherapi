@@ -38,13 +38,11 @@ public class CurrentWeatherController {
                 return ResponseEntity.badRequest().body(validationErrors);// return an array of all erros; hasmaps are best
             }
 
-
-
             String apiKey = env.getProperty("OW_API_KEY"); // Can access any properties within application.properties without sharing when uploading code
             String queryString = "?q=" + cityName + "&appid=" + apiKey + "&units=" + units;
             String openWeatherURL = BASE_URL + queryString;
 
-            //System.out.println(openWeatherURL);
+            System.out.println();
             CurrentWeather owRes = restTemplate.getForObject(openWeatherURL, CurrentWeather.class); // Client that allow calls to be made to weather api
 
             assert owRes != null;
@@ -87,7 +85,7 @@ public class CurrentWeatherController {
             RestTemplate restTemplate,// client; initiates call
             @RequestParam(value = "name") String cityName,
             @RequestParam(defaultValue = "imperial") String units
-            ) {
+    ) {
         try {
             HashMap<String, String> validationErrors = WeatherValidation.validateQuery(cityName, units);
 

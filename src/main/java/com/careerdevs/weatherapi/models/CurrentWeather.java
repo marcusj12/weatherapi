@@ -47,7 +47,7 @@ public class CurrentWeather {
 
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("{");
+            final StringBuilder sb = new StringBuilder("{");
             sb.append("\"lon\":").append(lon);
             sb.append(", \"lat\":").append(lat);
             sb.append('}');
@@ -84,7 +84,7 @@ public class CurrentWeather {
 
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("{");
+            final StringBuilder sb = new StringBuilder("{");
             sb.append("\"temp\":").append(temp);
             sb.append(", \"feels_like\":").append(feels_like);
             sb.append(", \"temp_min\":").append(temp_min);
@@ -118,7 +118,7 @@ public class CurrentWeather {
 
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("{");
+            final StringBuilder sb = new StringBuilder("{");
             sb.append("\"id\":").append(id);
             sb.append(", \"main\":\"").append(main).append('"');
             sb.append(", \"description\":\"").append(description).append('"');
@@ -130,24 +130,24 @@ public class CurrentWeather {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("{");
+        final StringBuilder sb = new StringBuilder("{");
         sb.append("\"name\":\"").append(name).append('"');
         sb.append(", \"timezone\":").append(timezone);
         sb.append(", \"visibility\":").append(visibility);
         sb.append(", \"coord\":").append(coord);
         sb.append(", \"main\":").append(main);
-        sb.append(", \"weather\":").append(weather == null ? "null" : Arrays.asList(weather).toString());
+        sb.append(", \"weather\":").append(Arrays.toString(weather));
         sb.append('}');
         return sb.toString();
     }
 
-    public CurrentWeatherReport createReport (String units){
+    public CurrentWeatherReport createReport(String units){
             return new CurrentWeatherReport(
                 getName(),
                 getCoord(),
                 getMain(),
                 getWeather()[0],
-                    "units"
+                    units
 
         );
     }

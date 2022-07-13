@@ -10,6 +10,8 @@ public class Forecast {
 
     private ForecastWeatherData[] list;
 
+    private int visibility;
+
     public static class City {
         private String name;
         private Coords coord;
@@ -56,6 +58,8 @@ public class Forecast {
             return dateTime;
         }
     }
+
+    public int getVisibility(){return visibility;}
 
     public City getCity() {
         return city;
